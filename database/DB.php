@@ -18,7 +18,7 @@ class DB
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $pdo;
         } catch (PDOException $e) {
-            throw new PDOException($e->getMessage(), (int)$e->getCode());
+            throw new PDOException($e->getMessage(), (int) $e->getCode());
         }
     }
 }

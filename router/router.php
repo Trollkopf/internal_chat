@@ -4,26 +4,37 @@ include_once "../controllers/usercontroller.php";
 include_once "../controllers/chatcontroller.php";
 
 
-    if($_POST['new_user']){
-        $name=htmlspecialchars($_POST['name']);
-        $password=password_hash($_POST['password'], PASSWORD_BCRYPT);
-        $dept=$_POST['department'];
+if ($_POST['new_user']) {
+    $name = htmlspecialchars($_POST['name']);
+    $surname = htmlspecialchars($_POST['surname']);
+    $phone = htmlspecialchars($_POST['phone']);
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $dept = $_POST['department'];
 
-        $ins = new UserController();
-        $ins->add_user($name, $password, $dept);
+    $ins = new UserController();
+    $ins->add_user($name, $surname, $phone, $password, $dept);
 
-        unset($ins);
-    }
+    unset($ins);
+}
+if ($_POST['login']) {
+    $phone = htmlspecialchars($_POST['phone']);
+    $password = htmlspecialchars($_POST['password']);
 
-    if($_POST['new_msg']){
-        session_start();
-        $id=$_SESSION['ID'];
-        $msg=$_POST['msg'];
+    $ins = new UserController();
+    $ins->login($phone, $password);
+    unset($ins);
+}
 
-        $ins = new ChatController();
-        $ins->send_message($id, $msg);
+if ($_POST['new_msg']) {
+    session_start();
+    $id = $_SESSION['ID'];
+    $msg = $_POST['msg'];
 
-        unset($ins);
-    }
+    $ins = new ChatController();
+    $ins->send_message($id, $msg);
 
-    print_r($_POST);
+    unset($ins);
+}
+
+
+print_r($_POST);
