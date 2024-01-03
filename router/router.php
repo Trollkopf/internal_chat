@@ -16,6 +16,7 @@ if ($_POST['new_user']) {
 
     unset($ins);
 }
+
 if ($_POST['login']) {
     $phone = htmlspecialchars($_POST['phone']);
     $password = htmlspecialchars($_POST['password']);
@@ -34,6 +35,17 @@ if ($_POST['new_msg']) {
     $ins->send_message($id, $msg);
 
     unset($ins);
+}
+
+if ($_POST['new_specific_msg']) {
+    $userid = $_POST['user_id'];
+    $receiverid = $_POST['receiver_id'];
+    $msg = $_POST['msg'];
+    $name = $_POST['receiver_name'];
+    $surname = $_POST['receiver_surname'];
+
+    $ins = new ChatController();
+    $ins->send_specific_message($userid, $receiverid, $msg, $name, $surname);
 }
 
 

@@ -10,8 +10,13 @@ $users = UserController::list_users();
 ?>
 
 <style>
-	#container {
-		height: 500px;
+	#display_chat {
+		height: 48vh;
+	}
+
+	#display_users {
+		height: 85vh;
+
 	}
 
 	#anchor {
@@ -43,7 +48,7 @@ $users = UserController::list_users();
 
 		<div class="bg-dark mt-3 p-3 rounded-lg col-9">
 			<h2 class="text-light d-flex justify-content-center">Bienvenid@&nbsp;<span style="color:#dd7ff3;">
-					<?php echo $_SESSION['name']." ".$_SESSION['surname']; ?>
+					<?php echo ucfirst($_SESSION['name']) . " " . ucfirst($_SESSION['surname']); ?>
 				</span>!</h2>
 			<h3 class="text-white d-flex justify-content-center">Chat general</h3>
 			<div class="overflow-auto bg-dark mb-2" id="display_chat">
@@ -55,7 +60,7 @@ $users = UserController::list_users();
 							<div class="d-flex justify-content-end mx-3 mb-1">
 								<p class="bg-warning rounded-lg p-3">
 									<span class="font-weight-bold">
-										<?php echo $c->name." ".$c->surname; ?> :
+										<?php echo ucfirst($c->name) . " " . ucfirst($c->surname); ?> :
 									</span>
 									<?php echo $c->message; ?>
 								</p>
@@ -64,7 +69,7 @@ $users = UserController::list_users();
 							<div class="d-flex justify-content-start mx-3 mb-1">
 								<p class="bg-info rounded-lg p-3">
 									<span class="font-weight-bold">
-										<?php echo $c->name." ".$c->surname; ?> :
+										<?php echo ucfirst($c->name) . " " . ucfirst($c->surname); ?> :
 									</span>
 									<?php echo $c->message; ?>
 								</p>
@@ -100,17 +105,25 @@ $users = UserController::list_users();
 		<div class="col-sm">
 			<div class="overflow-auto bg-dark mt-3 p-3 rounded-lg" id="display_users">
 				<?php foreach ($users as $u):
-					if($u->id != $_SESSION['ID']): ?>
-						<div class="bg-success rounded-lg p-2 mb-2">
-							<span class="font-weight-bold">
-								<?php echo $u->name." ".$u->surname ?>
-							</span>
-							<div>
-								<?php echo ucfirst($u->department); ?>
-					</div>
-				</div>
+					if ($u->id != $_SESSION['ID']): ?>
+						<form class="form-horizontal" method="get" action="./specific_chat.php">
 
-				<?php endif; endforeach; ?>
+							<input type="hidden" value="<?php echo $u->id; ?>" name="receiver_id">
+							<input type="hidden" value="<?php echo $u->name; ?>" name="receiver_name">
+							<input type="hidden" value="<?php echo $u->surname; ?>" name="receiver_surname">
+
+							<button type="submit" name="contact_user" class="btn-block bg-success rounded-lg h p-2 mb-2"
+								value="contact_user">
+								<span class="text-white font-weight-bold">
+									<?php echo ucfirst($u->name) . " " . ucfirst($u->surname) ?>
+								</span>
+								<div class="text-white">
+									<?php echo ucfirst($u->department); ?>
+								</div>
+							</button>
+						</form>
+
+					<?php endif; endforeach; ?>
 			</div>
 		</div>
 	</div>

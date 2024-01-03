@@ -2,7 +2,16 @@
 
 class UserController
 {
-	function add_user($name, $surname, $phone, $password, $dept)
+	/**
+	 * Insert a new user in the database
+	 * @param string $name
+	 * @param string $surname
+	 * @param string $phone
+	 * @param string $password
+	 * @param string $department
+	 * @return void
+	 */
+	function add_user($name, $surname, $phone, $password, $department)
 	{
 		include_once "../database/DB.php";
 
@@ -15,7 +24,7 @@ class UserController
 		$query->bindParam(":surname", $surname);
 		$query->bindParam(":phone", $phone);
 		$query->bindParam(":pass", $password);
-		$query->bindParam(":dept", $dept);
+		$query->bindParam(":dept", $department);
 		$query->execute();
 		$query->closecursor();
 
@@ -30,6 +39,14 @@ class UserController
 
 	}
 
+	/**
+	 * Check the $phone (as a user) fits with the password written by the user
+	 * Start new session and send you to the homepage (main chat)
+	 *
+	 * @param string $phone
+	 * @param string $password
+	 * @return void
+	 */
 	function login($phone, $password)
 	{
 		include_once "../database/DB.php";
@@ -79,6 +96,12 @@ class UserController
 
 	}
 
+	/**
+	 * Find the whole information about a user by the phone number
+	 *
+	 * @param string $phone
+	 * @return array $result
+	 */
 	function find_user($phone)
 	{
 
@@ -99,6 +122,11 @@ class UserController
 
 	}
 
+	/**
+	 * Return all the information about all the users in the database
+	 *
+	 * @return array $result
+	 */
 	public static function list_users()
 	{
 
